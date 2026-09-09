@@ -1,1 +1,8 @@
-
+{
+  "SKU001": {
+    "nome": "Conta buddha inv",
+    "descricao": "Conta com Buddha no inv",
+    "preco": 3.90,
+    "estoque": 2
+  }
+}
