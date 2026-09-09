@@ -1,1 +1,26 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imperium Store</title>
+    <style>
+        body { font-family: sans-serif; background-color: #121212; color: #fff; padding: 20px; }
+        .card { background: #1e1e1e; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #333; }
+        .price { color: #00ff88; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Imperium Store</h1>
+    {% for sku, item in produtos.items() %}
+        <div class="card">
+            <h2>{{ item.nome }}</h2>
+            <p>{{ item.descricao }}</p>
+            <p class="price">R$ {{ item.preco }}</p>
+            <p>Estoque: {{ item.estoque }}</p>
+        </div>
+    {% else %}
+        <p>Nenhum produto cadastrado no momento.</p>
+    {% endfor %}
+</body>
+</html>
