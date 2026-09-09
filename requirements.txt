@@ -1,0 +1,6 @@
+flask
+gunicorn
+flask
+discord.py
+qrcode
+pillow
