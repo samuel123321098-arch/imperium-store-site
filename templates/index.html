@@ -7,14 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0d0f14;
-            --card-bg: #161a23;
-            --accent: #00d2ff;
+            --bg: #06080d;
+            --card-bg: #0b0f17;
+            --accent: #1e88e5;
             --text: #ffffff;
             --text-sub: #8a99ad;
-            --green: #00e676;
-            --red: #ff5252;
-            --border: #222938;
+            --border: #1a2235;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -26,98 +24,197 @@
             padding: 15px 5%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 12px;
         }
 
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .brand img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
-        .brand h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; }
+        header img { width: 45px; height: 45px; border-radius: 8px; }
+        header h1 { font-size: 1.3rem; font-weight: 800; }
 
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
+            position: relative;
+            transition: transform 0.2s;
         }
 
-        .card:hover { transform: translateY(-4px); border-color: var(--accent); }
-        .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-        .card-desc { color: var(--text-sub); font-size: 0.85rem; margin-bottom: 20px; }
+        .card:hover { transform: translateY(-4px); border-color: #2a3655; }
 
-        .card-footer {
+        /* Borda azul superior */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: #2196f3;
+            z-index: 10;
+        }
+
+        /* Área da Imagem */
+        .img-container {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            background: #121826; 
+        }
+        
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-auto {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-top: auto;
-            padding-top: 15px;
-            border-top: 1px solid var(--border);
+            gap: 4px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+            z-index: 2;
         }
 
-        .price { font-size: 1.2rem; font-weight: 800; color: var(--green); }
+        /* Área de Texto e Preço */
+        .card-content { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
         
-        .stock { font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
-        .in-stock { background: rgba(0, 230, 118, 0.1); color: var(--green); }
-        .out-stock { background: rgba(255, 82, 82, 0.1); color: var(--red); }
-
-        .btn-buy {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: var(--accent);
-            color: #000;
-            font-weight: 700;
-            padding: 10px;
-            border-radius: 6px;
-            text-decoration: none;
-            margin-top: 15px;
+        .card-title {
+            font-size: 1rem;
+            font-weight: 800;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            min-height: 44px;
         }
 
-        .btn-buy.disabled {
-            background: #2a3241;
+        .separator {
+            border: none;
+            border-top: 1px dashed #2a3655;
+            margin-bottom: 12px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .old-price {
             color: var(--text-sub);
-            pointer-events: none;
+            text-decoration: line-through;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
+
+        .discount {
+            background: #059669;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        .new-price {
+            color: #4facfe;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .pix-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+
+        .pix-icon {
+            width: 12px;
+            height: 8px;
+            background: #fbc02d;
+            border-radius: 2px;
+        }
+
+        /* Botões Canto Inferior Direito */
+        .actions {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            background: #131a28;
+            border: 1px solid #2a3655;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4facfe;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .btn-icon:hover { background: #1a2235; border-color: #4facfe; }
+        
+        .esgotado { opacity: 0.5; pointer-events: none; filter: grayscale(100%); }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand">
-            <img src="{{ url_for('static', filename='logo.gif') }}" alt="Logo Imperium" onerror="this.style.display='none'">
-            <h1>IMPERIUM STORE</h1>
-        </div>
+        <img src="{{ url_for('static', filename='logo.gif') }}" alt="Logo">
+        <h1>IMPERIUM STORE</h1>
     </header>
 
     <div class="container">
         <div class="grid">
             {% for sku, item in produtos.items() %}
-                <div class="card">
-                    <div>
-                        <h2 class="card-title">{{ item.nome }}</h2>
-                        <p class="card-desc">{{ item.descricao }}</p>
+                <div class="card {% if item.estoque == 0 %}esgotado{% endif %}">
+                    <div class="img-container">
+                        <div class="badge-auto">⚡ Automática</div>
+                        {% if item.imagem %}
+                            <img src="{{ item.imagem }}" alt="{{ item.nome }}">
+                        {% endif %}
                     </div>
-                    <div>
-                        <div class="card-footer">
-                            <span class="price">R$ {{ "%.2f"|format(item.preco) }}</span>
-                            {% if item.estoque > 0 %}
-                                <span class="stock in-stock">Estoque: {{ item.estoque }}</span>
-                            {% else %}
-                                <span class="stock out-stock">Esgotado</span>
-                            {% endif %}
+                    
+                    <div class="card-content">
+                        <h2 class="card-title">{{ item.nome }}</h2>
+                        <hr class="separator">
+                        
+                        <div class="price-row">
+                            <span class="old-price">R$ {{ "%.2f"|format(item.preco * 1.5) }}</span>
+                            <span class="discount">🔥 -33%</span>
                         </div>
                         
-                        {% if item.estoque > 0 %}
-                            <a href="https://discord.gg" target="_blank" class="btn-buy">Comprar</a>
-                        {% else %}
-                            <a href="#" class="btn-buy disabled">Indisponível</a>
-                        {% endif %}
+                        <div class="new-price">R$ {{ "%.2f"|format(item.preco) }}</div>
+                        
+                        <div class="pix-info">
+                            <div class="pix-icon"></div> via PIX
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <a href="https://discord.gg/" class="btn-icon">⚡</a>
                     </div>
                 </div>
             {% endfor %}
